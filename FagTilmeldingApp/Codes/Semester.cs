@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FagTilmeldingApp.Codes
 {
-    internal class Semester : School
+    internal sealed class Semester : School
     {
         public string? SemesterNavn { get; set; }
 
