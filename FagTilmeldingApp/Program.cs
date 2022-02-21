@@ -41,18 +41,8 @@ List<Course> KurseList = new()
 Enrollment E1 = new Enrollment();
 List<Enrollment> Elist = new List<Enrollment>() { };
 
-Console.Clear();
-Console.WriteLine("----------------------------------------------------------------");
-Console.WriteLine(s.SchoolName + ", " + s.SemesterNavn + " " + "fag timelding app.");
-Console.WriteLine("----------------------------------------------------------------");
-
-List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
-Console.WriteLine("Elever i Grundlæggende programmering: " + list.Count());
-list = Elist.Where(a => a.CourseId == 2).ToList();
-Console.WriteLine("Elever i Database programmering: " + list.Count());
-list = Elist.Where(a => a.CourseId == 3).ToList();
-Console.WriteLine("Elever i Studieteknik: " + list.Count());
-Console.WriteLine();
+int UserElevId = 0;
+int UserCourseId = 0;
 
 while (true)
 {
@@ -61,7 +51,7 @@ while (true)
     Console.WriteLine(s.SchoolName + ", " + s.SemesterNavn + " " + "fag timelding app.");
     Console.WriteLine("----------------------------------------------------------------");
 
-    list = Elist.Where(a => a.CourseId == 1).ToList();
+    List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("Elever i Grundlæggende programmering: " + list.Count());
     list = Elist.Where(a => a.CourseId == 2).ToList();
     Console.WriteLine("Elever i Database programmering: " + list.Count());
@@ -69,12 +59,21 @@ while (true)
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
-    int UserElevId = 0;
-    int UserCourseId = 0;
+    List<Student> students = ElevList.Where(a => a.ElevId == UserElevId).ToList();
+    List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
+    foreach (Student student in students)
+    {
+        Console.Write(student.ForNavn + " " + student.EfterNavn + " tilmeldt fag ");
+    }
+    foreach (Course course in courses)
+    {
+        Console.Write(course.CourseName);
+    }
+    Console.WriteLine("\n---------------------------------------------------------------- \n");
 
     while (UserElevId != null)
     {
-        Console.WriteLine("ElevID: ");
+        Console.WriteLine("\nElevID: ");
         try
         {
             UserElevId = Convert.ToInt32(Console.ReadLine());
@@ -86,7 +85,7 @@ while (true)
             }
             else
             {
-                Console.WriteLine("ElevID findes ikke");
+                Console.WriteLine("Elev findes ikke");
             }
         }
         catch
@@ -97,7 +96,7 @@ while (true)
 
     while (UserCourseId != null)
     {
-        Console.WriteLine("CourseID: ");
+        Console.WriteLine("\nKurse ID: ");
         try
         {
             UserCourseId = Convert.ToInt32(Console.ReadLine());
@@ -109,7 +108,7 @@ while (true)
             }
             else
             {
-                Console.WriteLine("ElevID findes ikke");
+                Console.WriteLine("Kurse findes ikke");
             }
         }
         catch
@@ -117,7 +116,16 @@ while (true)
             Console.WriteLine("Det er ikke et tal");
         }
     }
+
+    List<Enrollment> tests = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
+    if(tests.Count == 0)
+    { 
     Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
-    
+    }
+    else
+    {
+        Console.WriteLine("\nStudent already exist in that class - Try again!");
+        Console.ReadKey();
+    }
 }
 
