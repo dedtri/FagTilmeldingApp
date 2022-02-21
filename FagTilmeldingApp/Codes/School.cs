@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FagTilmeldingApp.Codes
 {
-    internal class School : Semester
+    internal class School
     {
-        string? SchoolName { get; set; }
+        public string? SchoolName { get; set; }
 
-        public School(string schoolName, string semesterNavn) : base(string semesterNavn)
+        public School(string schoolName)
         {
-
+            SchoolName = schoolName;
         }
     }
 }
