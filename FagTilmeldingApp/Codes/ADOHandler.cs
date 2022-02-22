@@ -94,6 +94,33 @@ namespace FagTilmeldingApp.Codes
             return courses;
         }
 
+        public List<Enrollment> GetEnrollment()
+        {
+            List<Enrollment> enrollments = new List<Enrollment>();
+
+            using SqlConnection con = new SqlConnection(ConnectionString);
+            con.Open();
+
+            SqlCommand command = new SqlCommand
+                (
+                "SELECT " +
+                "* " +
+                "FROM Class", con
+                );
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Enrollment enrollment = new Enrollment() { EnrollmentId = reader.GetInt32(0), ElevId = reader.GetInt32(1), CourseId = reader.GetInt32(2) };
+                enrollments.Add(enrollment);
+            }
+
+            //con.Close(); - Kun hvis man ikke har using
+
+            return enrollments;
+        }
+
         public void InsertEnrollment(int StudentId, int CourseId)
         {
             List<Enrollment> enrollments = new List<Enrollment>();

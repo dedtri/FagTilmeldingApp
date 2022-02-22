@@ -47,28 +47,10 @@ else
     s.SetUddannelsesLinje(AngivLinje);
 }
 
-//List<Teacher> TeacherList = new()
-//{
-//    new Teacher() {LærerId = 1, ForNavn = "Niels", EfterNavn = "Olesen"},
-//    new Teacher() {LærerId = 2, ForNavn = "Henrik", EfterNavn = "Poulsen" }
-//};
-
-//List<Student> ElevList = new()
-//{
-//    new Student() { ElevId = 1, ForNavn = "Martin", EfterNavn = "Jensen" },
-//    new Student() { ElevId = 2, ForNavn = "Patrik", EfterNavn = "Nielsen"},
-//    new Student() { ElevId = 3, ForNavn = "Susanne", EfterNavn = "Hansen" },
-//    new Student() { ElevId = 4, ForNavn = "Thomas", EfterNavn = "Olsen" }
-//};
-//List<Course> KurseList = new()
-//{
-//    new Course() { CourseId = 1, CourseName = "Grundlæggende Programmering", TeacherId = 1 },
-//    new Course() { CourseId = 2, CourseName = "Database Programmering", TeacherId = 1 },
-//    new Course() { CourseId = 3, CourseName = "Studieteknik", TeacherId = 1 }
-//};
-
 Enrollment E1 = new Enrollment();
-List<Enrollment> Elist = new List<Enrollment>() { };
+//List<Enrollment> Elist = new List<Enrollment>() { };
+
+
 
 int UserElevId = 0;
 int UserCourseId = 0;
@@ -76,6 +58,7 @@ bool mainflag = true;
 
 while (mainflag)
 {
+    List<Enrollment> Elist = adoHandler.GetEnrollment();
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
@@ -170,7 +153,6 @@ while (mainflag)
     if(valid2.Count == 0)
     {
         adoHandler.InsertEnrollment(UserElevId, UserCourseId);
-        Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
     }
     else
     {
