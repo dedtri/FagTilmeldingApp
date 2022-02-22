@@ -14,15 +14,23 @@ AngivForløb = Console.ReadLine();
 Console.Write("Angiv uddannelseslinje: ");
 AngivLinje = Console.ReadLine();
 
-Semester s = new(AngivSkole, AngivForløb);;
+Semester s = new(AngivSkole, AngivForløb);
 
-Console.WriteLine("\nØnsker du at angiv en kort beskrivelse af uddannelseslinje?:  ");
-Console.WriteLine("1) Ja");
-Console.WriteLine("2) Nej");
-Console.Write("Vælg 1 eller 2: ");
-cki = Console.ReadKey();
+do
+{
+    Console.Clear();
+    Console.WriteLine("Angiv skole: " + AngivSkole);
+    Console.WriteLine("Angiv hovedforløb: " + AngivForløb);
+    Console.WriteLine("Angiv uddannelseslinje: " + AngivLinje);
+    Console.WriteLine("\nØnsker du at angiv en kort beskrivelse af uddannelseslinje?:  ");
+    Console.WriteLine("1) Ja");
+    Console.WriteLine("2) Nej");
+    Console.Write("Vælg 1 eller 2: ");
+    cki = Console.ReadKey();
+}
+while (cki.Key != ConsoleKey.D1 && cki.Key != ConsoleKey.D2);
 
-if(cki.Key == ConsoleKey.D1)
+if (cki.Key == ConsoleKey.D1)
 {
     Console.WriteLine("\nAngiv beskrivelse: ");
     AngivBeskrivelse = Console.ReadLine();
@@ -88,7 +96,9 @@ while (true)
     }
     Console.WriteLine("\n---------------------------------------------------------------- \n");
 
-    while (UserElevId != null)
+    bool flag = true;
+
+    while (flag == true)
     {
         Console.WriteLine("\nElevID: ");
         try
@@ -99,7 +109,7 @@ while (true)
             if (valid.Count > 0)
             {
                 E1.ElevId = Convert.ToInt32(UserElevId);
-                break;
+                flag = false;
             }
             else
             {
@@ -112,20 +122,22 @@ while (true)
         }
     }
 
-    while (UserCourseId != null)
+    flag = true;
+
+    while (flag == true)
     {
         Console.WriteLine("\nKurse ID: ");
         try
         {
             UserCourseId = Convert.ToInt32(Console.ReadLine());
 
-            List<Course> valid = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
-            if (valid.Count > 0)            
+            List<Course> valid3 = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
+            if (valid3.Count > 0)
             {
                 E1.CourseId = Convert.ToInt32(UserCourseId);
-                break;
+                flag = false;
             }
-            else
+            else if (valid3.Count == 0)
             {
                 Console.WriteLine("Kurse findes ikke");
             }
