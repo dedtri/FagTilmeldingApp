@@ -3,19 +3,21 @@
 // Iteration 3
 string AngivSkole;
 string AngivForløb;
+string AngivLinje;
 
 Console.WriteLine("Angiv skole: ");
 AngivSkole = Console.ReadLine();
 Console.WriteLine("Angiv hovedforløb: ");
 AngivForløb = Console.ReadLine();
+Console.WriteLine("Angiv uddannelseslinje: ");
+AngivLinje = Console.ReadLine();
 
 Semester s = new(AngivSkole, AngivForløb);
+;
 
 Console.Clear();
 
-Console.WriteLine("----------------------------------------------------------------");
-Console.WriteLine(s.SchoolName + ", " +  s.SemesterNavn + " " + "fag timelding app.");
-Console.WriteLine("----------------------------------------------------------------");
+s.SetUddannelsesLinje(AngivLinje);
 
 List<Teacher> TeacherList = new()
 {
@@ -48,7 +50,7 @@ while (true)
 {
     Console.Clear();
     Console.WriteLine("----------------------------------------------------------------");
-    Console.WriteLine(s.SchoolName + ", " + s.SemesterNavn + " " + "fag timelding app.");
+    Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
     Console.WriteLine("----------------------------------------------------------------");
 
     List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
