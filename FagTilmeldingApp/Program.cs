@@ -67,8 +67,9 @@ List<Enrollment> Elist = new List<Enrollment>() { };
 
 int UserElevId = 0;
 int UserCourseId = 0;
+bool mainflag = true;
 
-while (true)
+while (mainflag)
 {
     Console.Clear();
     Console.WriteLine("----------------------------------------------------------------");
@@ -98,7 +99,7 @@ while (true)
 
     bool flag = true;
 
-    while (flag == true)
+    while (flag)
     {
         Console.WriteLine("\nElevID: ");
         try
@@ -124,7 +125,7 @@ while (true)
 
     flag = true;
 
-    while (flag == true)
+    while (flag)
     {
         Console.WriteLine("\nKurse ID: ");
         try
