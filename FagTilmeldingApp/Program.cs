@@ -125,6 +125,8 @@ while (true)
     else
     {
         Console.WriteLine("\nStudent already exist in that class - Try again!");
+        UserElevId = 0;
+        UserCourseId = 0;
         Console.ReadKey();
     }
 }
