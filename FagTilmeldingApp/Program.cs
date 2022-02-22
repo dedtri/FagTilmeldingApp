@@ -1,4 +1,4 @@
-﻿using FagTilmeldingApp.Codes;
+﻿global using FagTilmeldingApp.Codes;
 
 // Iteration 5
 string AngivSkole;
@@ -6,6 +6,12 @@ string AngivForløb;
 string AngivLinje;
 string AngivBeskrivelse;
 ConsoleKeyInfo cki;
+
+ADOHandler adoHandler = new ADOHandler();
+List<Teacher> TeacherList = adoHandler.GetTeacher();
+List<Student> ElevList = adoHandler.GetStudent();
+List<Course> KurseList = adoHandler.GetCourses();
+adoHandler.DeleteEnrollment();
 
 Console.Write("Angiv skole: ");
 AngivSkole = Console.ReadLine();
@@ -41,26 +47,25 @@ else
     s.SetUddannelsesLinje(AngivLinje);
 }
 
-List<Teacher> TeacherList = new()
-{
-    new Teacher() {LærerId = 1, ForNavn = "Niels", EfterNavn = "Olesen"},
-    new Teacher() {LærerId = 2, ForNavn = "Henrik", EfterNavn = "Poulsen" }
-};
+//List<Teacher> TeacherList = new()
+//{
+//    new Teacher() {LærerId = 1, ForNavn = "Niels", EfterNavn = "Olesen"},
+//    new Teacher() {LærerId = 2, ForNavn = "Henrik", EfterNavn = "Poulsen" }
+//};
 
-List<Student> ElevList = new()
-{
-    new Student() { ElevId = 1, ForNavn = "Martin", EfterNavn = "Jensen" },
-    new Student() { ElevId = 2, ForNavn = "Patrik", EfterNavn = "Nielsen"},
-    new Student() { ElevId = 3, ForNavn = "Susanne", EfterNavn = "Hansen" },
-    new Student() { ElevId = 4, ForNavn = "Thomas", EfterNavn = "Olsen" }
-};
-
-List<Course> KurseList = new()
-{
-    new Course() { CourseId = 1, CourseName = "Grundlæggende Programmering", TeacherId = 1 },
-    new Course() { CourseId = 2, CourseName = "Database Programmering", TeacherId = 1 },
-    new Course() { CourseId = 3, CourseName = "Studieteknik", TeacherId = 1 }
-};
+//List<Student> ElevList = new()
+//{
+//    new Student() { ElevId = 1, ForNavn = "Martin", EfterNavn = "Jensen" },
+//    new Student() { ElevId = 2, ForNavn = "Patrik", EfterNavn = "Nielsen"},
+//    new Student() { ElevId = 3, ForNavn = "Susanne", EfterNavn = "Hansen" },
+//    new Student() { ElevId = 4, ForNavn = "Thomas", EfterNavn = "Olsen" }
+//};
+//List<Course> KurseList = new()
+//{
+//    new Course() { CourseId = 1, CourseName = "Grundlæggende Programmering", TeacherId = 1 },
+//    new Course() { CourseId = 2, CourseName = "Database Programmering", TeacherId = 1 },
+//    new Course() { CourseId = 3, CourseName = "Studieteknik", TeacherId = 1 }
+//};
 
 Enrollment E1 = new Enrollment();
 List<Enrollment> Elist = new List<Enrollment>() { };
@@ -81,11 +86,11 @@ while (mainflag)
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
 
-    List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
+    List<Enrollment> list = Elist.Where(a => a.CourseId == 4).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 2).ToList();
+    list = Elist.Where(a => a.CourseId == 5).ToList();
     Console.WriteLine("Elever i Database programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 3).ToList();
+    list = Elist.Where(a => a.CourseId == 6).ToList();
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
@@ -163,8 +168,9 @@ while (mainflag)
 
     List<Enrollment> valid2 = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
     if(valid2.Count == 0)
-    { 
-    Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
+    {
+        adoHandler.InsertEnrollment(UserElevId, UserCourseId);
+        Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
     }
     else
     {
