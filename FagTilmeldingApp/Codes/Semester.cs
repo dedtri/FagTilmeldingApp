@@ -23,7 +23,7 @@ namespace FagTilmeldingApp.Codes
         public override void SetUddannelsesLinje(string uddannelseslinje, string uddannelsesbeskrivelse)
         {
             Uddannelseslinje = uddannelseslinje;
-            Uddannelsesbeskrivelse = uddannelsesbeskrivelse;
+            Uddannelsesbeskrivelse = "[ " + uddannelsesbeskrivelse + " ]";
         }
 
     }

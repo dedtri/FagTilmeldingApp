@@ -24,7 +24,7 @@ cki = Console.ReadKey();
 
 if(cki.Key == ConsoleKey.D1)
 {
-    Console.WriteLine("Angiv beskrivelse: ");
+    Console.WriteLine("\nAngiv beskrivelse: ");
     AngivBeskrivelse = Console.ReadLine();
     s.SetUddannelsesLinje(AngivLinje, AngivBeskrivelse);
 }
@@ -65,7 +65,7 @@ while (true)
     Console.Clear();
     Console.WriteLine("----------------------------------------------------------------");
     Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
-    Console.WriteLine("[ " + s.Uddannelsesbeskrivelse + " ]");
+    Console.WriteLine(s.Uddannelsesbeskrivelse);
     Console.WriteLine("----------------------------------------------------------------");
 
     List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
