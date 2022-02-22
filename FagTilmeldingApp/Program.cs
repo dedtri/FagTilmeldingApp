@@ -4,20 +4,34 @@
 string AngivSkole;
 string AngivForløb;
 string AngivLinje;
+string AngivBeskrivelse;
+ConsoleKeyInfo cki;
 
-Console.WriteLine("Angiv skole: ");
+Console.Write("Angiv skole: ");
 AngivSkole = Console.ReadLine();
-Console.WriteLine("Angiv hovedforløb: ");
+Console.Write("Angiv hovedforløb: ");
 AngivForløb = Console.ReadLine();
-Console.WriteLine("Angiv uddannelseslinje: ");
+Console.Write("Angiv uddannelseslinje: ");
 AngivLinje = Console.ReadLine();
 
-Semester s = new(AngivSkole, AngivForløb);
-;
+Semester s = new(AngivSkole, AngivForløb);;
 
-Console.Clear();
+Console.WriteLine("\nØnsker du at angiv en kort beskrivelse af uddannelseslinje?:  ");
+Console.WriteLine("1) Ja");
+Console.WriteLine("2) Nej");
+Console.Write("Vælg 1 eller 2: ");
+cki = Console.ReadKey();
 
-s.SetUddannelsesLinje(AngivLinje);
+if(cki.Key == ConsoleKey.D1)
+{
+    Console.WriteLine("Angiv beskrivelse: ");
+    AngivBeskrivelse = Console.ReadLine();
+    s.SetUddannelsesLinje(AngivLinje, AngivBeskrivelse);
+}
+else
+{
+    s.SetUddannelsesLinje(AngivLinje);
+}
 
 List<Teacher> TeacherList = new()
 {
@@ -51,6 +65,7 @@ while (true)
     Console.Clear();
     Console.WriteLine("----------------------------------------------------------------");
     Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
+    Console.WriteLine("[ " + s.Uddannelsesbeskrivelse + " ]");
     Console.WriteLine("----------------------------------------------------------------");
 
     List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
