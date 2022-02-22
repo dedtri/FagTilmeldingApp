@@ -95,7 +95,8 @@ while (true)
         {
             UserElevId = Convert.ToInt32(Console.ReadLine());
 
-            if (UserElevId <= 4 && UserElevId != 0)
+            List<Student> valid = ElevList.Where(a => a.ElevId == UserElevId).ToList();
+            if (valid.Count > 0)
             {
                 E1.ElevId = Convert.ToInt32(UserElevId);
                 break;
@@ -118,7 +119,8 @@ while (true)
         {
             UserCourseId = Convert.ToInt32(Console.ReadLine());
 
-            if (UserCourseId == 1 || UserCourseId == 2 || UserCourseId == 3)
+            List<Course> valid = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
+            if (valid.Count > 0)            
             {
                 E1.CourseId = Convert.ToInt32(UserCourseId);
                 break;
@@ -134,8 +136,8 @@ while (true)
         }
     }
 
-    List<Enrollment> tests = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
-    if(tests.Count == 0)
+    List<Enrollment> valid2 = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
+    if(valid2.Count == 0)
     { 
     Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
     }
