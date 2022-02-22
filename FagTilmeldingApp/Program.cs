@@ -25,7 +25,7 @@ do
     Console.WriteLine("\nØnsker du at angiv en kort beskrivelse af uddannelseslinje?:  ");
     Console.WriteLine("1) Ja");
     Console.WriteLine("2) Nej");
-    Console.Write("Vælg 1 eller 2: ");
+    Console.Write("\nVælg 1 eller 2: ");
     cki = Console.ReadKey();
 }
 while (cki.Key != ConsoleKey.D1 && cki.Key != ConsoleKey.D2);
@@ -72,13 +72,17 @@ bool mainflag = true;
 while (mainflag)
 {
     Console.Clear();
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
+    Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine(s.Uddannelsesbeskrivelse);
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
 
     List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
-    Console.WriteLine("Elever i Grundlæggende programmering: " + list.Count());
+    Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
     list = Elist.Where(a => a.CourseId == 2).ToList();
     Console.WriteLine("Elever i Database programmering: " + list.Count());
     list = Elist.Where(a => a.CourseId == 3).ToList();
@@ -89,19 +93,22 @@ while (mainflag)
     List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
     foreach (Student student in students)
     {
+        Console.ForegroundColor = ConsoleColor.Cyan;
         Console.Write(student.ForNavn + " " + student.EfterNavn + " tilmeldt fag ");
     }
     foreach (Course course in courses)
     {
         Console.Write(course.CourseName);
     }
-    Console.WriteLine("\n---------------------------------------------------------------- \n");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("\n----------------------------------------------------------------");
 
     bool flag = true;
 
     while (flag)
     {
-        Console.WriteLine("\nElevID: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("\nElevID: ");
         try
         {
             UserElevId = Convert.ToInt32(Console.ReadLine());
@@ -114,11 +121,13 @@ while (mainflag)
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Elev findes ikke");
             }
         }
         catch
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Det er ikke et tal");
         }
     }
@@ -127,7 +136,8 @@ while (mainflag)
 
     while (flag)
     {
-        Console.WriteLine("\nKurse ID: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("\nKurse ID: ");
         try
         {
             UserCourseId = Convert.ToInt32(Console.ReadLine());
@@ -140,11 +150,13 @@ while (mainflag)
             }
             else if (valid3.Count == 0)
             {
-                Console.WriteLine("Kurse findes ikke");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Kursen findes ikke");
             }
         }
         catch
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Det er ikke et tal");
         }
     }
@@ -156,6 +168,7 @@ while (mainflag)
     }
     else
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\nStudent already exist in that class - Try again!");
         UserElevId = 0;
         UserCourseId = 0;
