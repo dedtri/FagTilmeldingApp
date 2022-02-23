@@ -5,13 +5,16 @@ string AngivSkole;
 string AngivForløb;
 string AngivLinje;
 string AngivBeskrivelse;
+string AngivNavn1, AngivNavn2;
 ConsoleKeyInfo cki;
 
 EntityFrameworkHandler eHandler = new();
 List<Teacher> TeacherList = eHandler.GetTeacher();
 List<Student> ElevList = eHandler.GetStudent();
 List<Course> KurseList = eHandler.GetCourses();
-//eHandler.ClearEnrollment();
+List<Class> Elist = eHandler.GetEnrollment();
+
+eHandler.ClearEnrollment();
 
 Console.Write("Angiv skole: ");
 AngivSkole = Console.ReadLine();
@@ -55,7 +58,7 @@ bool mainflag = true;
 
 while (mainflag)
 {
-    List<Class> Elist = eHandler.GetEnrollment();
+    Elist = eHandler.GetEnrollment();
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");

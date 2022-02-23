@@ -60,21 +60,6 @@ namespace FagTilmeldingApp.Codes
             db.SaveChanges();
         }
 
-        //public void DeleteEnrollment(string fornavn, string efternavn)
-        //{
-        //    using TECContext db = new TECContext();
-
-        //    foreach (Class item in db.Classes.ToList())
-        //    {
-        //        if (fornavn == item.Student.FirstName && efternavn == item.Student.LastName)
-        //        {
-        //            db.Remove(item);
-        //        }
-        //    }
-
-        //    db.SaveChanges();
-        //}
-
         public void ClearEnrollment()
         {
             using TECContext db = new TECContext();
