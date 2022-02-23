@@ -145,6 +145,18 @@ namespace FagTilmeldingApp.Codes
             command.ExecuteNonQuery();
         }
 
+        //public void DeleteEnrollment(int elevid)
+        //{
+        //    List<Enrollment> enrollments = new List<Enrollment>();
+
+        //    using SqlConnection con = new SqlConnection(ConnectionString);
+        //    con.Open();
+
+        //    SqlCommand command = new SqlCommand("DELETE FROM Class", con);
+
+        //    command.ExecuteNonQuery();
+        //}
+
 
     }
 
