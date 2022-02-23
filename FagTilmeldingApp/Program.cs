@@ -58,8 +58,23 @@ bool mainflag = true;
 
 while (mainflag)
 {
-    Elist = eHandler.GetEnrollment();
     Console.Clear();
+
+    try
+    {
+        Elist = eHandler.GetEnrollment();
+        List<Class> list3 = Elist.Where(a => a.CourseId == 2).ToList();
+        if (list3.Count() > 3)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            throw new Exception("Der må max være 3 elever i Database programmering!");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
     Console.ForegroundColor = ConsoleColor.Green;
@@ -68,6 +83,8 @@ while (mainflag)
     Console.WriteLine(s.Uddannelsesbeskrivelse);
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
+
+    
 
     List<Class> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
