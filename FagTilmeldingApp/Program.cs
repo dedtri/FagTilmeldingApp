@@ -11,6 +11,7 @@ ADOHandler adoHandler = new ADOHandler();
 List<Teacher> TeacherList = adoHandler.GetTeacher();
 List<Student> ElevList = adoHandler.GetStudent();
 List<Course> KurseList = adoHandler.GetCourses();
+List<Enrollment> Elist = adoHandler.GetEnrollment();
 adoHandler.DeleteEnrollment();
 
 Console.Write("Angiv skole: ");
@@ -58,8 +59,24 @@ bool mainflag = true;
 
 while (mainflag)
 {
-    List<Enrollment> Elist = adoHandler.GetEnrollment();
+
     Console.Clear();
+
+    try
+    {
+        Elist = adoHandler.GetEnrollment();
+        List<Enrollment> list3 = Elist.Where(a => a.CourseId == 2).ToList();
+        if (list3.Count() > 3)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            throw new Exception("Der må max være 3 elever i Database programmering!");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
     Console.ForegroundColor = ConsoleColor.Green;
@@ -69,11 +86,11 @@ while (mainflag)
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
 
-    List<Enrollment> list = Elist.Where(a => a.CourseId == 4).ToList();
+    List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 5).ToList();
+    list = Elist.Where(a => a.CourseId == 2).ToList();
     Console.WriteLine("Elever i Database programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 6).ToList();
+    list = Elist.Where(a => a.CourseId == 3).ToList();
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
