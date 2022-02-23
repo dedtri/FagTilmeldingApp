@@ -1,5 +1,5 @@
 ﻿global using FagTilmeldingApp.Codes;
-
+using FagTilmeldingApp.Codes.EntityFrameworkModels;
 // Iteration 6
 string AngivSkole;
 string AngivForløb;
@@ -7,11 +7,11 @@ string AngivLinje;
 string AngivBeskrivelse;
 ConsoleKeyInfo cki;
 
-ADOHandler adoHandler = new ADOHandler();
-List<Teacher> TeacherList = adoHandler.GetTeacher();
-List<Student> ElevList = adoHandler.GetStudent();
-List<Course> KurseList = adoHandler.GetCourses();
-adoHandler.DeleteEnrollment();
+EntityFrameworkHandler eHandler = new();
+List<Teacher> TeacherList = eHandler.GetTeacher();
+List<Student> ElevList = eHandler.GetStudent();
+List<Course> KurseList = eHandler.GetCourses();
+//eHandler.ClearEnrollment();
 
 Console.Write("Angiv skole: ");
 AngivSkole = Console.ReadLine();
@@ -47,10 +47,7 @@ else
     s.SetUddannelsesLinje(AngivLinje);
 }
 
-Enrollment E1 = new Enrollment();
-//List<Enrollment> Elist = new List<Enrollment>() { };
-
-
+Class E1 = new Class();
 
 int UserElevId = 0;
 int UserCourseId = 0;
@@ -58,7 +55,7 @@ bool mainflag = true;
 
 while (mainflag)
 {
-    List<Enrollment> Elist = adoHandler.GetEnrollment();
+    List<Class> Elist = eHandler.GetEnrollment();
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
@@ -69,20 +66,20 @@ while (mainflag)
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
 
-    List<Enrollment> list = Elist.Where(a => a.CourseId == 4).ToList();
+    List<Class> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 5).ToList();
+    list = Elist.Where(a => a.CourseId == 2).ToList();
     Console.WriteLine("Elever i Database programmering: " + list.Count());
-    list = Elist.Where(a => a.CourseId == 6).ToList();
+    list = Elist.Where(a => a.CourseId == 3).ToList();
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
-    List<Student> students = ElevList.Where(a => a.ElevId == UserElevId).ToList();
+    List<Student> students = ElevList.Where(a => a.StudentId == UserElevId).ToList();
     List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
     foreach (Student student in students)
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(student.ForNavn + " " + student.EfterNavn + " tilmeldt fag ");
+        Console.Write(student.FirstName + " " + student.LastName + " tilmeldt fag ");
     }
     foreach (Course course in courses)
     {
@@ -101,10 +98,10 @@ while (mainflag)
         {
             UserElevId = Convert.ToInt32(Console.ReadLine());
 
-            List<Student> valid = ElevList.Where(a => a.ElevId == UserElevId).ToList();
+            List<Student> valid = ElevList.Where(a => a.StudentId == UserElevId).ToList();
             if (valid.Count > 0)
             {
-                E1.ElevId = Convert.ToInt32(UserElevId);
+                E1.StudentId = Convert.ToInt32(UserElevId);
                 flag = false;
             }
             else
@@ -149,10 +146,10 @@ while (mainflag)
         }
     }
 
-    List<Enrollment> valid2 = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
+    List<Class> valid2 = Elist.Where(a => a.StudentId == UserElevId && a.CourseId == UserCourseId).ToList();
     if(valid2.Count == 0)
     {
-        adoHandler.InsertEnrollment(UserElevId, UserCourseId);
+        eHandler.InsertEnrollment(UserElevId, UserCourseId);
     }
     else
     {
