@@ -35,7 +35,8 @@ List<Course> KurseList = new()
 {
     new Course() { CourseId = 1, CourseName = "Grundlæggende Programmering", TeacherId = 1 },
     new Course() { CourseId = 2, CourseName = "Database Programmering", TeacherId = 1 },
-    new Course() { CourseId = 3, CourseName = "Studieteknik", TeacherId = 1 }
+    new Course() { CourseId = 3, CourseName = "Studieteknik", TeacherId = 1 },
+    new Course() { CourseId = 3, CourseName = "Clientside Programmering", TeacherId = 2 }
 };
 
 Enrollment E1 = new Enrollment();
