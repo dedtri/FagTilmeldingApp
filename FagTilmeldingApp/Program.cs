@@ -1,15 +1,16 @@
 ﻿using FagTilmeldingApp.Codes;
 
 // Iteration 8
-//string AngivSkole;
-//string AngivForløb;
+string AngivSkole;
+string AngivForløb;
 
-//Console.WriteLine("Angiv skole: ");
-//AngivSkole = Console.ReadLine();
-//Console.WriteLine("Angiv hovedforløb: ");
-//AngivForløb = Console.ReadLine();
+Console.WriteLine("Angiv skole: ");
+AngivSkole = Console.ReadLine();
+Console.WriteLine("Angiv hovedforløb: ");
+AngivForløb = Console.ReadLine();
 
-//Semester s = new(AngivSkole, AngivForløb);
+Semester s = new(AngivSkole, AngivForløb);
+School sc = new(AngivSkole);
 
 //Console.Clear();
 
@@ -25,6 +26,13 @@ List<Course> KurseList = new()
     new Course() { CourseId = 1, CourseName = "Studieteknik", TeacherId = 1 },
     new Course() { CourseId = 5, CourseName = "Clientside Programmering", TeacherId = 2 }
 };
+
+Console.WriteLine();
+sc.SetCourseCount(KurseList);
+Console.WriteLine("Skolen har i alt: " + sc.FagIAlt + " fag.");
+s.SetCourseCount(KurseList);
+Console.WriteLine(s.SemesterNavn + " har i alt: " + s.ProgrammeringsFagIAlt + " fag.");
+Console.ReadKey();
 
 Console.WriteLine("Usorteret list: ");
 Console.WriteLine("-----------------------------------------------------------------");
