@@ -115,8 +115,6 @@ while (mainflag)
     Console.ForegroundColor = ConsoleColor.White;
     errormsg = null;
 
-    bool flag = true;
-
     while (errormsg == null)
     {
         Console.ForegroundColor = ConsoleColor.White;
@@ -143,8 +141,6 @@ while (mainflag)
             errormsg = ("Det er ikke et tal");
         }
     }
-
-    flag = true;
 
     while (errormsg == null)
     {
