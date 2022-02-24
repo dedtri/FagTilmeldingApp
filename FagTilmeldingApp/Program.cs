@@ -60,6 +60,15 @@ while (mainflag)
 {
     Console.Clear();
 
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("----------------------------------------------------------------");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine(s.SchoolName + ", " + s.UddannelsesLinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine(s.UddannelseslinjeBeskrivelse);
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("----------------------------------------------------------------");
+
     try
     {
         Elist = eHandler.GetEnrollment();
@@ -74,17 +83,6 @@ while (mainflag)
     {
         Console.WriteLine(ex.Message);
     }
-
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("----------------------------------------------------------------");
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine(s.Uddannelsesbeskrivelse);
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("----------------------------------------------------------------");
-
-    
 
     List<Class> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
