@@ -161,6 +161,7 @@ while (mainflag)
                 Console.ForegroundColor = ConsoleColor.Red;
                 errormsg = ("Kursen findes ikke");
                 UserElevId = 0;
+                UserCourseId = 0;
             }
         }
         catch
@@ -168,6 +169,7 @@ while (mainflag)
             Console.ForegroundColor = ConsoleColor.Red;
             errormsg = ("Det er ikke et tal");
             UserElevId = 0;
+            UserCourseId = 0;
         }
     }
 
