@@ -6,28 +6,25 @@ using System.Threading.Tasks;
 
 namespace FagTilmeldingApp.Codes
 {
-    internal class Teacher
-    {
-        public int LærerId { get; set; }
-        public string? ForNavn { get; set; }
-        public string? EfterNavn { get; set; }
-    }
-    internal class Student
-    {
-        public int ElevId { get; set; }
-        public string? ForNavn { get; set; }
-        public string? EfterNavn { get; set; }
-    }
-    internal class Course
+    internal class Course : IComparable<Course>
     {
         public int CourseId { get; set; }
         public string? CourseName { get; set; }
         public int? TeacherId { get; set; }
+
+        //Sort by letters
+
+        public int CompareTo(Course next)
+        {
+            return this.CourseName.CompareTo(next.CourseName);
+        }
+
+        //Sort by numbers
+
+        //public int CompareTo(Course next)
+        //{
+        //    return this.CourseId.CompareTo(next.CourseId);
+        //}
     }
-    internal class Enrollment
-    {
-        public int EnrollmentId { get; set; }
-        public int? ElevId { get; set; }
-        public int? CourseId { get; set; }
-    }
+
 }
