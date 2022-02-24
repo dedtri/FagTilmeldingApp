@@ -55,6 +55,7 @@ Class E1 = new Class();
 int UserElevId = 0;
 int UserCourseId = 0;
 bool mainflag = true;
+string errormsg = null;
 
 while (mainflag)
 {
@@ -77,6 +78,7 @@ while (mainflag)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             throw new Exception("Der må max være 3 elever i Database programmering!");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
     catch (Exception ex)
@@ -106,10 +108,16 @@ while (mainflag)
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\n----------------------------------------------------------------");
     }
-    
+
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(errormsg);
+    Console.ForegroundColor = ConsoleColor.White;
+    errormsg = null;
+
     bool flag = true;
 
-    while (flag)
+    while (errormsg == null)
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("\nElevID: ");
@@ -121,24 +129,24 @@ while (mainflag)
             if (valid.Count > 0)
             {
                 E1.StudentId = Convert.ToInt32(UserElevId);
-                flag = false;
+                break;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Elev findes ikke");
+                errormsg = ("Elev findes ikke");
             }
         }
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Det er ikke et tal");
+            errormsg = ("Det er ikke et tal");
         }
     }
 
     flag = true;
 
-    while (flag)
+    while (errormsg == null)
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("\nKurse ID: ");
@@ -150,21 +158,25 @@ while (mainflag)
             if (valid3.Count > 0)
             {
                 E1.CourseId = Convert.ToInt32(UserCourseId);
-                flag = false;
+                break;
             }
             else if (valid3.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Kursen findes ikke");
+                errormsg = ("Kursen findes ikke");
+                UserElevId = 0;
             }
         }
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Det er ikke et tal");
+            errormsg = ("Det er ikke et tal");
+            UserElevId = 0;
         }
     }
 
+    if (errormsg == null)
+    { 
     List<Class> valid2 = Elist.Where(a => a.StudentId == UserElevId && a.CourseId == UserCourseId).ToList();
     if(valid2.Count == 0)
     {
@@ -177,6 +189,7 @@ while (mainflag)
         UserElevId = 0;
         UserCourseId = 0;
         Console.ReadKey();
+    }
     }
 }
 
