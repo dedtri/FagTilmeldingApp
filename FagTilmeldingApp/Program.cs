@@ -103,9 +103,9 @@ while (mainflag)
     foreach (Course course in courses)
     {
         Console.Write(course.CourseName);
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\n----------------------------------------------------------------");
     }
-    Console.ForegroundColor = ConsoleColor.White;
     
     bool flag = true;
 
