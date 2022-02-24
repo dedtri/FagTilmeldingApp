@@ -100,14 +100,15 @@ while (mainflag)
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.Write(student.FirstName + " " + student.LastName + " tilmeldt fag ");
+        
     }
     foreach (Course course in courses)
     {
         Console.Write(course.CourseName);
+        Console.WriteLine("\n----------------------------------------------------------------");
     }
     Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("\n----------------------------------------------------------------");
-
+    
     bool flag = true;
 
     while (flag)

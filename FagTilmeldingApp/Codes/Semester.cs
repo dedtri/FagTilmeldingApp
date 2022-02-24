@@ -9,21 +9,21 @@ namespace FagTilmeldingApp.Codes
     internal sealed class Semester : School
     {
         public string? SemesterNavn { get; set; }
-        public string? Uddannelseslinje { get; set; }
-        public string? Uddannelsesbeskrivelse { get; set; }
+        public override string? UddannelsesLinje { get; set; }
+        public override string? UddannelseslinjeBeskrivelse { get; set; }
 
         public Semester(string schoolName, string semesterNavn) : base(schoolName)
         {
             SemesterNavn = semesterNavn;
         }
-        public override void SetUddannelsesLinje(string uddannelseslinje)
+        public override void SetUddannelsesLinje(string uddannelsesLinje)
         {
-            Uddannelseslinje = uddannelseslinje;
+            UddannelsesLinje = uddannelsesLinje;
         }
-        public override void SetUddannelsesLinje(string uddannelseslinje, string uddannelsesbeskrivelse)
+        public override void SetUddannelsesLinje(string uddannelsesLinje, string uddannelseslinjeBeskrivelse)
         {
-            Uddannelseslinje = uddannelseslinje;
-            Uddannelsesbeskrivelse = "[ " + uddannelsesbeskrivelse + " ]";
+            UddannelsesLinje = uddannelsesLinje;
+            UddannelseslinjeBeskrivelse = "[ " + uddannelseslinjeBeskrivelse + " ]";
         }
 
     }
