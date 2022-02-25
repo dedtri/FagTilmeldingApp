@@ -44,10 +44,14 @@ List<Enrollment> Elist = new List<Enrollment>() { };
 
 int UserElevId = 0;
 int UserCourseId = 0;
+string errormsg = null;
+Student students;
+Course courses;
 
 while (true)
 {
     Console.Clear();
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("----------------------------------------------------------------");
     Console.WriteLine(s.SchoolName + ", " + s.SemesterNavn + " " + "fag timelding app.");
     Console.WriteLine("----------------------------------------------------------------");
@@ -60,75 +64,91 @@ while (true)
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
-    List<Student> students = ElevList.Where(a => a.ElevId == UserElevId).ToList();
-    List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
-    foreach (Student student in students)
+    if (Elist != null)
     {
-        Console.Write(student.ForNavn + " " + student.EfterNavn + " tilmeldt fag ");
-    }
-    foreach (Course course in courses)
-    {
-        Console.Write(course.CourseName);
-    }
-    Console.WriteLine("\n---------------------------------------------------------------- \n");
+        foreach (Enrollment c in Elist)
+        {
+            students = ElevList.FirstOrDefault(a => a.ElevId == c.ElevId);
+            courses = KurseList.FirstOrDefault(a => a.CourseId == c.CourseId);
 
-    while (UserElevId != null)
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(students.ForNavn + " " + students.EfterNavn + " tilmeldt fag: " + courses.CourseName);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        Console.WriteLine("----------------------------------------------------------------");
+        Console.WriteLine();
+    }
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(errormsg);
+    Console.ForegroundColor = ConsoleColor.White;
+    errormsg = null;
+
+    while (errormsg == null)
     {
-        Console.WriteLine("\nElevID: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("\nElevID: ");
         try
         {
             UserElevId = Convert.ToInt32(Console.ReadLine());
 
-            if (UserElevId <= 4 && UserElevId != 0)
+            List<Student> valid = ElevList.Where(a => a.ElevId == UserElevId).ToList();
+            if (valid.Count > 0)
             {
                 E1.ElevId = Convert.ToInt32(UserElevId);
                 break;
             }
             else
             {
-                Console.WriteLine("Elev findes ikke");
+                Console.ForegroundColor = ConsoleColor.Red;
+                errormsg = ("Elev findes ikke");
             }
         }
         catch
         {
-            Console.WriteLine("Det er ikke et tal");
+            Console.ForegroundColor = ConsoleColor.Red;
+            errormsg = ("Det er ikke et tal");
         }
     }
 
-    while (UserCourseId != null)
+    while (errormsg == null)
     {
-        Console.WriteLine("\nKurse ID: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("\nKurse ID: ");
         try
         {
             UserCourseId = Convert.ToInt32(Console.ReadLine());
 
-            if (UserCourseId == 1 || UserCourseId == 2 || UserCourseId == 3)
+            List<Course> valid3 = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
+            if (valid3.Count > 0)
             {
                 E1.CourseId = Convert.ToInt32(UserCourseId);
                 break;
             }
-            else
+            else if (valid3.Count == 0)
             {
-                Console.WriteLine("Kurse findes ikke");
+                Console.ForegroundColor = ConsoleColor.Red;
+                errormsg = ("Kursen findes ikke");
             }
         }
         catch
         {
-            Console.WriteLine("Det er ikke et tal");
+            Console.ForegroundColor = ConsoleColor.Red;
+            errormsg = ("Det er ikke et tal");
         }
     }
 
-    List<Enrollment> tests = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
+    if (errormsg == null)
+    {
+        List<Enrollment> tests = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
     if(tests.Count == 0)
     { 
     Elist.Add(new Enrollment() { EnrollmentId = Elist.Count() + 1, ElevId = UserElevId, CourseId = UserCourseId });
     }
     else
     {
-        Console.WriteLine("\nStudent already exist in that class - Try again!");
-        UserElevId = 0;
-        UserCourseId = 0;
-        Console.ReadKey();
+      errormsg = ("\nStudent already exist in that class - Try again!");
+    }
     }
 }
 
