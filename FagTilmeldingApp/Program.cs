@@ -39,7 +39,6 @@ List<Course> KurseList = new()
     new Course() { CourseId = 4, CourseName = "Clientside Programmering", TeacherId = 2 }
 };
 
-Enrollment E1 = new Enrollment();
 List<Enrollment> Elist = new List<Enrollment>() { };
 
 int UserElevId = 0;
@@ -95,7 +94,6 @@ while (true)
             List<Student> valid = ElevList.Where(a => a.ElevId == UserElevId).ToList();
             if (valid.Count > 0)
             {
-                E1.ElevId = Convert.ToInt32(UserElevId);
                 break;
             }
             else
@@ -122,7 +120,6 @@ while (true)
             List<Course> valid3 = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
             if (valid3.Count > 0)
             {
-                E1.CourseId = Convert.ToInt32(UserCourseId);
                 break;
             }
             else if (valid3.Count == 0)
