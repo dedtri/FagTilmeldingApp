@@ -9,8 +9,8 @@ namespace FagTilmeldingApp.Codes
     internal sealed class Semester : School
     {
         public string? SemesterNavn { get; set; }
-        public string? Uddannelseslinje { get; set; }
-        public string? Uddannelsesbeskrivelse { get; set; }
+        public string? UddannelsesLinje { get; set; }
+        public string? UddannelseslinjeBeskrivelse { get; set; }
 
         public Semester(string schoolName, string semesterNavn) : base(schoolName)
         {
@@ -18,12 +18,12 @@ namespace FagTilmeldingApp.Codes
         }
         public override void SetUddannelsesLinje(string uddannelseslinje)
         {
-            Uddannelseslinje = uddannelseslinje;
+            UddannelsesLinje = uddannelseslinje;
         }
         public override void SetUddannelsesLinje(string uddannelseslinje, string uddannelsesbeskrivelse)
         {
-            Uddannelseslinje = uddannelseslinje;
-            Uddannelsesbeskrivelse = "[ " + uddannelsesbeskrivelse + " ]";
+            UddannelsesLinje = uddannelseslinje;
+            UddannelseslinjeBeskrivelse = "[ " + uddannelsesbeskrivelse + " ]";
         }
 
     }

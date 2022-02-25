@@ -49,18 +49,26 @@ else
 }
 
 Enrollment E1 = new Enrollment();
-//List<Enrollment> Elist = new List<Enrollment>() { };
-
-
 
 int UserElevId = 0;
 int UserCourseId = 0;
 bool mainflag = true;
+string errormsg = null;
+Student students;
+Course courses;
 
 while (mainflag)
 {
-
     Console.Clear();
+
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("----------------------------------------------------------------");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine(s.SchoolName + ", " + s.UddannelsesLinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine(s.UddannelseslinjeBeskrivelse);
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("----------------------------------------------------------------");
 
     try
     {
@@ -70,21 +78,13 @@ while (mainflag)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             throw new Exception("Der må max være 3 elever i Database programmering!");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
     catch (Exception ex)
     {
         Console.WriteLine(ex.Message);
     }
-
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("----------------------------------------------------------------");
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine(s.SchoolName + ", " + s.Uddannelseslinje + ", " + s.SemesterNavn + " " + "fag timelding app.");
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine(s.Uddannelsesbeskrivelse);
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("----------------------------------------------------------------");
 
     List<Enrollment> list = Elist.Where(a => a.CourseId == 1).ToList();
     Console.WriteLine("\nElever i Grundlæggende programmering: " + list.Count());
@@ -94,23 +94,29 @@ while (mainflag)
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
-    List<Student> students = ElevList.Where(a => a.ElevId == UserElevId).ToList();
-    List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
-    foreach (Student student in students)
+    if (Elist != null)
     {
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(student.ForNavn + " " + student.EfterNavn + " tilmeldt fag ");
+        foreach (Enrollment c in Elist)
+        {
+            students = ElevList.FirstOrDefault(a => a.ElevId == c.ElevId);
+            courses = KurseList.FirstOrDefault(a => a.CourseId == c.CourseId);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(students.ForNavn + " " + students.EfterNavn + " tilmeldt fag: " + courses.CourseName);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        Console.WriteLine("----------------------------------------------------------------");
+        Console.WriteLine();
     }
-    foreach (Course course in courses)
-    {
-        Console.Write(course.CourseName);
-    }
+
+
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(errormsg);
     Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("\n----------------------------------------------------------------");
+    errormsg = null;
 
-    bool flag = true;
-
-    while (flag)
+    while (errormsg == null)
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("\nElevID: ");
@@ -122,24 +128,22 @@ while (mainflag)
             if (valid.Count > 0)
             {
                 E1.ElevId = Convert.ToInt32(UserElevId);
-                flag = false;
+                break;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Elev findes ikke");
+                errormsg = ("Elev findes ikke");
             }
         }
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Det er ikke et tal");
+            errormsg = ("Det er ikke et tal");
         }
     }
 
-    flag = true;
-
-    while (flag)
+    while (errormsg == null)
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("\nKurse ID: ");
@@ -151,33 +155,33 @@ while (mainflag)
             if (valid3.Count > 0)
             {
                 E1.CourseId = Convert.ToInt32(UserCourseId);
-                flag = false;
+                break;
             }
             else if (valid3.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Kursen findes ikke");
+                errormsg = ("Kursen findes ikke");
             }
         }
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Det er ikke et tal");
+            errormsg = ("Det er ikke et tal");
         }
     }
 
-    List<Enrollment> valid2 = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
-    if(valid2.Count == 0)
+    if (errormsg == null)
     {
-        adoHandler.InsertEnrollment(UserElevId, UserCourseId);
-    }
-    else
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("\nStudent already exist in that class - Try again!");
-        UserElevId = 0;
-        UserCourseId = 0;
-        Console.ReadKey();
+        List<Enrollment> valid2 = Elist.Where(a => a.ElevId == UserElevId && a.CourseId == UserCourseId).ToList();
+        if (valid2.Count == 0)
+        {
+            adoHandler.InsertEnrollment(UserElevId, UserCourseId);
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            errormsg = ("Student already exist in that class - Try again!");
+        }
     }
 }
 
