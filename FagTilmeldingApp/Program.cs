@@ -48,8 +48,6 @@ else
     s.SetUddannelsesLinje(AngivLinje);
 }
 
-Enrollment E1 = new Enrollment();
-
 int UserElevId = 0;
 int UserCourseId = 0;
 bool mainflag = true;
@@ -109,8 +107,6 @@ while (mainflag)
         Console.WriteLine();
     }
 
-
-
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(errormsg);
     Console.ForegroundColor = ConsoleColor.White;
@@ -127,7 +123,6 @@ while (mainflag)
             List<Student> valid = ElevList.Where(a => a.ElevId == UserElevId).ToList();
             if (valid.Count > 0)
             {
-                E1.ElevId = Convert.ToInt32(UserElevId);
                 break;
             }
             else
@@ -154,7 +149,6 @@ while (mainflag)
             List<Course> valid3 = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
             if (valid3.Count > 0)
             {
-                E1.CourseId = Convert.ToInt32(UserCourseId);
                 break;
             }
             else if (valid3.Count == 0)
