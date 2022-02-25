@@ -5,7 +5,6 @@ string AngivSkole;
 string AngivForløb;
 string AngivLinje;
 string AngivBeskrivelse;
-string AngivNavn1, AngivNavn2;
 ConsoleKeyInfo cki;
 
 EntityFrameworkHandler eHandler = new();
@@ -49,8 +48,6 @@ else
 {
     s.SetUddannelsesLinje(AngivLinje);
 }
-
-Class E1 = new Class();
 
 int UserElevId = 0;
 int UserCourseId = 0;
@@ -110,8 +107,6 @@ while (mainflag)
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine();
     }
-
-
     
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(errormsg);
@@ -129,7 +124,6 @@ while (mainflag)
             List<Student> valid = ElevList.Where(a => a.StudentId == UserElevId).ToList();
             if (valid.Count > 0)
             {
-                E1.StudentId = Convert.ToInt32(UserElevId);
                 break;
             }
             else
@@ -156,7 +150,6 @@ while (mainflag)
             List<Course> valid3 = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
             if (valid3.Count > 0)
             {
-                E1.CourseId = Convert.ToInt32(UserCourseId);
                 break;
             }
             else if (valid3.Count == 0)
