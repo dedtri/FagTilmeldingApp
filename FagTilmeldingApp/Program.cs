@@ -41,7 +41,7 @@ while (cki.Key != ConsoleKey.D1 && cki.Key != ConsoleKey.D2);
 
 if (cki.Key == ConsoleKey.D1)
 {
-    Console.WriteLine("\nAngiv beskrivelse: ");
+    Console.Write("\nAngiv beskrivelse: ");
     AngivBeskrivelse = Console.ReadLine();
     s.SetUddannelsesLinje(AngivLinje, AngivBeskrivelse);
 }
@@ -56,6 +56,8 @@ int UserElevId = 0;
 int UserCourseId = 0;
 bool mainflag = true;
 string errormsg = null;
+Student students = null;
+Course courses = null;
 
 while (mainflag)
 {
@@ -94,22 +96,23 @@ while (mainflag)
     Console.WriteLine("Elever i Studieteknik: " + list.Count());
     Console.WriteLine();
 
-    List<Student> students = ElevList.Where(a => a.StudentId == UserElevId).ToList();
-    List<Course> courses = KurseList.Where(a => a.CourseId == UserCourseId).ToList();
-    foreach (Student student in students)
+    if (Elist != null)
+    { 
+    foreach (Class c in Elist)
     {
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(student.FirstName + " " + student.LastName + " tilmeldt fag ");
-        
+        students = ElevList.FirstOrDefault(a => a.StudentId == c.StudentId);
+        courses = KurseList.FirstOrDefault(a => a.CourseId == c.CourseId);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(students.FirstName + " " +  students.LastName + " tilmeldt fag: " + courses.CourseName);
+            Console.ForegroundColor = ConsoleColor.White;         
     }
-    foreach (Course course in courses)
-    {
-        Console.Write(course.CourseName);
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("\n----------------------------------------------------------------");
+        Console.WriteLine("----------------------------------------------------------------");
+        Console.WriteLine();
     }
 
 
+    
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(errormsg);
     Console.ForegroundColor = ConsoleColor.White;
@@ -160,16 +163,12 @@ while (mainflag)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 errormsg = ("Kursen findes ikke");
-                UserElevId = 0;
-                UserCourseId = 0;
             }
         }
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
             errormsg = ("Det er ikke et tal");
-            UserElevId = 0;
-            UserCourseId = 0;
         }
     }
 
@@ -183,10 +182,7 @@ while (mainflag)
     else
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("\nStudent already exist in that class - Try again!");
-        UserElevId = 0;
-        UserCourseId = 0;
-        Console.ReadKey();
+        errormsg = ("Student already exist in that class - Try again!");
     }
     }
 }
